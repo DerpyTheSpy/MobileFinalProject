@@ -12,8 +12,6 @@ import {
   View  
 } from 'react-native';  
 
-//forum app
-
 export default class App extends Component {
 
 constructor(props) {
