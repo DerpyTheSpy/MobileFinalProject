@@ -146,4 +146,4 @@ const styles = StyleSheet.create({
     backgroundColor: '#F5FCFF',
     paddingTop: 20
   }
-});
+})
