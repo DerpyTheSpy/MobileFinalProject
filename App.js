@@ -1,41 +1,58 @@
-import React, {  
-  Component  
-} from 'react';  
-import {  
-  StyleSheet,  
-  Text,  
-  TextInput,  
-  FlatList,  
-  Image,  
-  Picker,  
-  TouchableHighlight,  
-  View  
-} from 'react-native';  
+//making forum app with react native and expo
+import React, { Component } from 'react';
+import { StyleSheet, Text, TextInput, FlatList, Image, Picker, TouchableHighlight, View } from 'react-native';
+import HomeScreen from './HomeScreen';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
+
+
+//needs to be an array of posts
+const posts = [
+  {
+    id: '',
+    createdAt: '',
+    updatedAt: '',  
+    title: '',
+    content: '',
+    author: '',
+    authorId: '',
+    comments: []
+  }
+];
+
+const AppNavigator = createStackNavigator({
+  Home: {
+    screen: HomeScreen,
+  },
+});
 
 export default class App extends Component {
-
-constructor(props) {
+  constructor(props) {
     super(props);
     this.state = {
-      data: [],
-      text: '',
-      pickerValue: '1',
-    };
+      posts: posts,
+      createdAt: '',
+      updatedAt: '',  
+      title: '',
+      content: '',
+      author: '',
+      authorId: '',
+      comments: []
+    }
   }
 
   componentDidMount() {
-    this.fetchData();
+    this.getPosts();
   }
 
-  fetchData = () => {
-    fetch('https://www.reddit.com/r/' + this.state.text + '.json')
-      .then(response => response.json())
-      .then(responseJson => {
+  getPosts() {
+    fetch('http://localhost:3000/posts')
+      .then((response) => response.json())
+      .then((responseJson) => {
         this.setState({
-          data: responseJson.data.children,
+          posts: responseJson
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   }
@@ -43,110 +60,47 @@ constructor(props) {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Text style={styles.headerText}>Raddit Forum</Text>
-        </View>
-        <View style={styles.body}>
-          <View style={styles.search}>
-            <TextInput
-              style={styles.searchInput}
-              onChangeText={text => this.setState({text})}
-              value={this.state.text}
-            />
-            <TouchableHighlight
-              style={styles.searchButton}
-              onPress={this.fetchData}
-              underlayColor="#ccc">
-              <Text style={styles.searchButtonText}>Search</Text>
-            </TouchableHighlight>
-          </View>
-          <FlatList
-            data={this.state.data}
-            renderItem={({item}) => (
-              <View style={styles.item}>
-                <Image
-                  style={styles.itemImage}
-                  source={{uri: item.data.thumbnail}}
-                />
-                <View style={styles.itemText}>
-                  <Text style={styles.itemTitle}>{item.data.title}</Text>
-                  <Text style={styles.itemAuthor}>
-                    {item.data.author} - {item.data.score}
-                  </Text>
-                </View>
-              </View>
-            )}
-            keyExtractor={item => item.data.id}
-          />
-        </View>
+        <Text style={styles.header}>Forum</Text>
+        <FlatList
+          data={this.state.posts}
+          renderItem={({item}) => <Text style={styles.item}>{item.title}</Text>}
+
+        />
       </View>
     );
   }
 }
 
+
+
+
+
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
-    height: 60,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  headerText: {
-    color: '#fff',
-    fontSize: 20,
-  },
-  body: {
-    flex: 1,
-    padding: 10,
-  },
-  search: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  searchInput: {
-    flex: 1,
-    height: 40,
-
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    padding: 5,
-  },
-  searchButton: {
-    width: 100,
-    height: 40,
-    marginLeft: 10,
-    backgroundColor: '#000',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
-  },
-  searchButtonText: {
-    color: '#fff',
-  },
-  item: {
-    flexDirection: 'row',
-    marginBottom: 10,
-  },
-  itemImage: {
-    width: 100,
-    height: 100,
-    marginRight: 10,
-  },
-  itemText: {
-    flex: 1,
-  },
-  itemTitle: {
-    fontSize: 16,
+    fontSize: 30,
     fontWeight: 'bold',
-  },
-  itemAuthor: {
-    fontSize: 12,
-    color: '#999',
+    },
+
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
   },
 });
+
+
+
+  
+    
+
+
+  
+  
 
