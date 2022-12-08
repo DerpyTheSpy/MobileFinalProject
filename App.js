@@ -44,7 +44,7 @@ constructor(props) {
     return (
       <View style={styles.container}>
         <View style={styles.header}>
-          <Text style={styles.headerText}>Reddit Forum</Text>
+          <Text style={styles.headerText}>Raddit Forum</Text>
         </View>
         <View style={styles.body}>
           <View style={styles.search}>
