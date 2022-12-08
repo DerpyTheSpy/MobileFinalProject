@@ -97,17 +97,67 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
+  },
+  header: {
+    height: 60,
+    backgroundColor: '#000',
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  headerText: {
+    color: '#fff',
+    fontSize: 20,
+  },
+  body: {
+    flex: 1,
+    padding: 10,
+  },
+  search: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  searchInput: {
+    flex: 1,
+    height: 40,
+
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    padding: 5,
+  },
+  searchButton: {
+    width: 100,
+    height: 40,
+    marginLeft: 10,
+    backgroundColor: '#000',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  searchButtonText: {
+    color: '#fff',
+  },
+  item: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  itemImage: {
+    width: 100,
+    height: 100,
+    marginRight: 10,
+  },
+  itemText: {
+    flex: 1,
+  },
+  itemTitle: {
+    fontSize: 16,
   },
   header: {
     fontSize: 30,
     fontWeight: 'bold',
-    },
-
-  item: {
-    padding: 10,
-    fontSize: 18,
-    height: 44,
+  },
+  itemAuthor: {
+    fontSize: 12,
+    color: '#999',
   },
 });
