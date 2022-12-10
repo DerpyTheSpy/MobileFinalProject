@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -14,6 +14,9 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
+
+
 
 const Stack = createNativeStackNavigator();
 
@@ -47,7 +50,20 @@ const fakePosts = [
   },
 ];
 
+
+
 const HomeScreen = ({ navigation }) => {
+  const [searchText, setSearchText] = useState('');
+  const [fakePosts, setFilteredData] = useState(data);
+
+  const onSearch = (text) => {
+    setSearchText(text);
+    const searchTerm = text.toLowerCase();
+    const filteredItems = data.filter((item) =>
+      item.title.toLowerCase().includes(searchTerm)
+    );
+    setFilteredData(filteredItems);
+  };
   const renderItem = ({ item: post }) => (
     <View style={styles.item}>
       {/* <Image style={styles.itemImage} source={{ uri: post.thumbnail }} /> */}
@@ -68,11 +84,13 @@ const HomeScreen = ({ navigation }) => {
       </View>
       <View style={styles.body}>
         <View style={styles.search}>
-          <TextInput
-            style={styles.searchInput}
-            // onChangeText={(text) => this.setState({ text })}
-            // value={this.state.text}
-          />
+        <TextInput
+          style={styles.searchInput}
+          onChangeText={onSearch}
+          value={searchText}
+          placeholder="Search"
+        />
+        <MyList data={data} />
           <TouchableHighlight
             style={styles.searchButton}
             // onPress={this.fetchData}
@@ -104,7 +122,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold',
     },
-
+    searchInput: {
+      padding: 16,
+    },
   item: {
     padding: 10,
     fontSize: 18,
