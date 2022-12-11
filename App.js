@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -25,7 +25,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Raddit' }}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
         <Stack.Screen name="CreatePost" component={CreatePost} />
@@ -34,7 +34,7 @@ export default function App() {
   );
 }
 
-const fakePosts = [
+const data = [
   {
     id: 1,
     title: 'Post 1',
@@ -61,7 +61,7 @@ const HomeScreen = ({ navigation }) => {
   );
 
   // this initial state is just for testing, we will fetch the posts from the API later and set the intial state to an empty array
-  const [posts, setPosts] = React.useState(fakePosts);
+  const [posts, setPosts] = React.useState(data);
 
   return (
     <View style={styles.container}>
@@ -72,16 +72,16 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.search}>
           <TextInput
             style={styles.searchInput}
-            // onChangeText={(text) => this.setState({ text })}
-            // value={this.state.text}
+            placeholder="Search by title"
+            onSubmitEditing={() => {
+              this.fetchData;
+            }}
+            onKeyPress={(event) => {
+              if (event.nativeEvent.key == 'Enter') {
+                alert(event.nativeEvent.key);
+              }
+            }}
           />
-          <TouchableHighlight
-            style={styles.searchButton}
-            // onPress={this.fetchData}
-            underlayColor="#ccc"
-          >
-            <Text style={styles.searchButtonText}>Search</Text>
-          </TouchableHighlight>
         </View>
         <SafeAreaView>
           <FlatList
