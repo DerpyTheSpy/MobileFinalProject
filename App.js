@@ -15,37 +15,7 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-//const SearchList = ({ items }) => {
-//  const [searchTerm, setSearchTerm] = React.useState('');
-//
-//  const handleSearch = text => {
-//    setSearchTerm(text);
-//  };
-//
-//  const searchResults = items.filter(item =>
-//    item.title.toLowerCase().includes(searchTerm.toLowerCase())
-//  );
-//
-//  return (
-//    <View>
-//      <TextInput
-//        value={searchTerm}
-//        onChangeText={handleSearch}
-//        placeholder="Search by title"
-//      />
-//      <FlatList
-//        data={searchResults}
-//        renderItem={({ item }) => (
-//          <View>
-//            <Text>{item.title}</Text>
-//            <Text>{item.description}</Text>
-//          </View>
-//        )}
-//        keyExtractor={item => item.id}
-//      />
-//    </View>
-//  );
-//};
+
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +29,7 @@ export default function App() {
           options={{ title: 'Raddit' }}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        <Stack.Screen name="Details" component={MyOtherPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -79,6 +50,10 @@ const data = [
   },
 ];
 
+
+
+
+
 const HomeScreen = ({ navigation }) => {
   const renderItem = ({ item: post }) => (
     <View style={styles.item}>
@@ -90,9 +65,9 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 
+
   // this initial state is just for testing, we will fetch the posts from the API later and set the intial state to an empty array
   const [posts, setPosts] = React.useState(data);
-
 
 
   return (
@@ -125,6 +100,17 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
+const MyOtherPage = ({ navigation }) => {
+  // Get the item that was passed from the previous screen
+  const { item } = navigation.state.params;
+  return (
+    <View>
+      <Text>Selected item: {item.key}</Text>
+    </View>
+  );
+};
+
 
 const styles = StyleSheet.create({
   container: {
