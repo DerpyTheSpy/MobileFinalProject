@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   Text,
@@ -15,6 +15,38 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
+//const SearchList = ({ items }) => {
+//  const [searchTerm, setSearchTerm] = React.useState('');
+//
+//  const handleSearch = text => {
+//    setSearchTerm(text);
+//  };
+//
+//  const searchResults = items.filter(item =>
+//    item.title.toLowerCase().includes(searchTerm.toLowerCase())
+//  );
+//
+//  return (
+//    <View>
+//      <TextInput
+//        value={searchTerm}
+//        onChangeText={handleSearch}
+//        placeholder="Search by title"
+//      />
+//      <FlatList
+//        data={searchResults}
+//        renderItem={({ item }) => (
+//          <View>
+//            <Text>{item.title}</Text>
+//            <Text>{item.description}</Text>
+//          </View>
+//        )}
+//        keyExtractor={item => item.id}
+//      />
+//    </View>
+//  );
+//};
+
 const Stack = createNativeStackNavigator();
 
 export default function App() {
@@ -24,7 +56,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Welcome' }}
+          options={{ title: 'Raddit' }}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
       </Stack.Navigator>
@@ -32,7 +64,7 @@ export default function App() {
   );
 }
 
-const fakePosts = [
+const data = [
   {
     id: 1,
     title: 'Post 1',
@@ -59,7 +91,9 @@ const HomeScreen = ({ navigation }) => {
   );
 
   // this initial state is just for testing, we will fetch the posts from the API later and set the intial state to an empty array
-  const [posts, setPosts] = React.useState(fakePosts);
+  const [posts, setPosts] = React.useState(data);
+
+
 
   return (
     <View style={styles.container}>
@@ -70,16 +104,15 @@ const HomeScreen = ({ navigation }) => {
         <View style={styles.search}>
           <TextInput
             style={styles.searchInput}
-            // onChangeText={(text) => this.setState({ text })}
-            // value={this.state.text}
-          />
-          <TouchableHighlight
-            style={styles.searchButton}
-            // onPress={this.fetchData}
-            underlayColor="#ccc"
-          >
-            <Text style={styles.searchButtonText}>Search</Text>
-          </TouchableHighlight>
+            placeholder="Search by title"
+          onSubmitEditing={()=>{
+              this.fetchData;
+          }}                        
+          onKeyPress={ (event) => {
+              if(event.nativeEvent.key == "Enter"){
+                  alert(event.nativeEvent.key)
+              } 
+          } }/>
         </View>
         <SafeAreaView>
           <FlatList
