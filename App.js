@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import CreatePost from './CreatePost';
 
 const Stack = createNativeStackNavigator();
 
@@ -27,6 +28,7 @@ export default function App() {
           options={{ title: 'Welcome' }}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
+        <Stack.Screen name="CreatePost" component={CreatePost} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -92,6 +94,22 @@ const HomeScreen = ({ navigation }) => {
     </View>
   );
 };
+
+// import { useNavigation } from '@react-navigation/native';
+
+// const Home = () => {
+//   const navigation = useNavigation();
+
+//   const handlePress = () => {
+//     navigation.navigate('Details');
+//   };
+
+//   return (
+//     <View>
+//       <Button title="Go to Details" onPress={handlePress} />
+//     </View>
+//   );
+// };
 
 const styles = StyleSheet.create({
   container: {
