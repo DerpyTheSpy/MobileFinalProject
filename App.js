@@ -15,6 +15,8 @@ import {
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import CreatePost from './CreatePost';
+import axios from 'axios';
+import Post from './Post';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,6 +31,7 @@ export default function App() {
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
         <Stack.Screen name="CreatePost" component={CreatePost} />
+        <Stack.Screen name="Post" component={Post} />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -50,18 +53,43 @@ const data = [
 ];
 
 const HomeScreen = ({ navigation }) => {
+  const handlePress = (id) => {
+    navigation.navigate('Post', { id });
+    // console.log(title);
+  };
+
   const renderItem = ({ item: post }) => (
-    <View style={styles.item}>
-      {/* <Image style={styles.itemImage} source={{ uri: post.thumbnail }} /> */}
-      <View style={styles.itemText}>
-        <Text style={styles.itemTitle}>{post.title}</Text>
-        <Text style={styles.itemAuthor}>{post.author}</Text>
+    <TouchableOpacity onPress={() => handlePress(post.id)}>
+      <View style={styles.item}>
+        {/* <Image style={styles.itemImage} source={{ uri: post.thumbnail }} /> */}
+        <View style={styles.itemText}>
+          <Text style={styles.itemTitle}>{post.title}</Text>
+          <Text style={styles.itemAuthor}>{post.author}</Text>
+        </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 
   // this initial state is just for testing, we will fetch the posts from the API later and set the intial state to an empty array
   const [posts, setPosts] = React.useState(data);
+  // useEffect(() => {
+  //   // console.error('asd');
+  //   const fetchData = async () => {
+  //     try {
+  //       const response = await axios.get('http://192.168.0.158:3000');
+  //       // console.log(response.status);
+  //       if (response.status === 200) {
+  //         console.log('yo');
+  //       } else {
+  //         console.log('yo');
+  //       }
+  //     } catch (error) {
+  //       console.error(JSON.stringify(error.response));
+  //       console.log('nos');
+  //     }
+  //   };
+  //   fetchData();
+  // }, []);
 
   return (
     <View style={styles.container}>
@@ -74,7 +102,7 @@ const HomeScreen = ({ navigation }) => {
             style={styles.searchInput}
             placeholder="Search by title"
             onSubmitEditing={() => {
-              this.fetchData;
+              console.log('submit');
             }}
             onKeyPress={(event) => {
               if (event.nativeEvent.key == 'Enter') {
