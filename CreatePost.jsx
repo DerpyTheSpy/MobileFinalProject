@@ -6,7 +6,6 @@ const CreatePostForm = () => {
   const [body, setBody] = React.useState('');
 
   const handleSubmit = () => {
-    // Do something with the post, e.g. send it to a server
     console.log({
       title,
       body,
