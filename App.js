@@ -27,7 +27,7 @@ export default function App() {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: 'Raddit' }}
+          options={{ title: 'Forum' }}
         />
         {/* <Stack.Screen name="Profile" component={ProfileScreen} /> */}
         <Stack.Screen name="CreatePost" component={CreatePost} />
@@ -37,29 +37,41 @@ export default function App() {
   );
 }
 
-const data = [
+const postList = [
   {
     id: 1,
-    title: 'Post 1',
-    content: 'Content 1',
-    author: 'Author 1',
+    title: 'How to use React Native',
+    content: 'lorem ipsum dolor sit amet ',
+    author: 'Stanley T.',
   },
   {
     id: 2,
-    title: 'Post 2',
+    title: 'Why React is superior to React Native',
     content: 'Content 2',
-    author: 'Author 2',
+    author: 'Minkyu K.',
+  },
+  {
+    id: 3,
+    title: 'I wish I could use React for mobile development',
+    content: 'Content 3',
+    author: 'John Cena',
+  },
+  {
+    id: 4,
+    title: 'Why is React Native so annoying?',
+    content: 'Content 4',
+    author: 'John Doe',
   },
 ];
 
 const HomeScreen = ({ navigation }) => {
-  const handlePress = (id) => {
-    navigation.navigate('Post', { id });
-    // console.log(title);
+  const handlePress = (post) => {
+    const { id, title, content, author } = post;
+    navigation.navigate('Post', { id, title, content, author });
   };
 
   const renderItem = ({ item: post }) => (
-    <TouchableOpacity onPress={() => handlePress(post.id)}>
+    <TouchableOpacity onPress={() => handlePress(post)} style={styles.post}>
       <View style={styles.item}>
         {/* <Image style={styles.itemImage} source={{ uri: post.thumbnail }} /> */}
         <View style={styles.itemText}>
@@ -71,25 +83,7 @@ const HomeScreen = ({ navigation }) => {
   );
 
   // this initial state is just for testing, we will fetch the posts from the API later and set the intial state to an empty array
-  const [posts, setPosts] = React.useState(data);
-  // useEffect(() => {
-  //   // console.error('asd');
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get('http://192.168.0.158:3000');
-  //       // console.log(response.status);
-  //       if (response.status === 200) {
-  //         console.log('yo');
-  //       } else {
-  //         console.log('yo');
-  //       }
-  //     } catch (error) {
-  //       console.error(JSON.stringify(error.response));
-  //       console.log('nos');
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  const [posts, setPosts] = React.useState(postList);
 
   return (
     <View style={styles.container}>
@@ -116,28 +110,13 @@ const HomeScreen = ({ navigation }) => {
             data={posts}
             renderItem={renderItem}
             keyExtractor={(post) => post.id}
+            style={styles.postContainer}
           />
         </SafeAreaView>
       </View>
     </View>
   );
 };
-
-// import { useNavigation } from '@react-navigation/native';
-
-// const Home = () => {
-//   const navigation = useNavigation();
-
-//   const handlePress = () => {
-//     navigation.navigate('Details');
-//   };
-
-//   return (
-//     <View>
-//       <Button title="Go to Details" onPress={handlePress} />
-//     </View>
-//   );
-// };
 
 const styles = StyleSheet.create({
   container: {
@@ -205,5 +184,25 @@ const styles = StyleSheet.create({
   itemAuthor: {
     fontSize: 12,
     color: '#999',
+  },
+  post: {
+    padding: 10,
+    backgroundColor: '#fff',
+    marginBottom: 10,
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+  postContainer: {
+    borderRadius: 5,
+    backgroundColor: '#eee',
+    padding: 10,
   },
 });
