@@ -58,7 +58,7 @@ const postList = [
   },
   {
     id: 4,
-    title: 'Why is React Native so annoying?',
+    title: 'I want to go back to React',
     content: 'Content 4',
     author: 'John Doe',
   },
