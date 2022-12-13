@@ -8,6 +8,24 @@ import {
   Button,
 } from 'react-native';
 
+const comments = [
+  {
+    id: 1,
+    author: 'Robert Lewandowski',
+    body: 'I love this post so much! Just like your goals!',
+  },
+  {
+    id: 2,
+    author: 'Iga Świątek',
+    body: 'This post is as good as your tennis game!',
+  },
+  {
+    id: 3,
+    author: 'Hubert Hurkacz',
+    body: 'My serve is better than this post!',
+  },
+];
+
 export default function Post({ route }) {
   const { id, author, title, content } = route.params;
 
@@ -27,10 +45,12 @@ export default function Post({ route }) {
         <Button title="Submit" />
       </View>
 
-      <View style={styles.commentContainer}>
-        <Text style={styles.commentAuthor}>Comment Author</Text>
-        <Text style={styles.commentBody}>Comment Body</Text>
-      </View>
+      {comments.map((comment) => (
+        <View key={comment.id} style={styles.commentContainer}>
+          <Text style={styles.commentAuthor}>{comment.author}</Text>
+          <Text style={styles.commentBody}>{comment.body}</Text>
+        </View>
+      ))}
     </ScrollView>
   );
 }
